@@ -19,9 +19,9 @@ export class TreeFilterService {
 
     if (tree.hasOwnProperty("children")) {
       if(tree.visible){
-        tree.children.forEach(child=>this.showAll(child));
+        tree.children?.forEach(child=>this.showAll(child));
       } else {
-        tree.children.map(child => {
+        tree.children?.map(child => {
           this.filterTree(child, filterText);
 
           tree.visible = tree.visible || child.visible;
@@ -37,7 +37,7 @@ export class TreeFilterService {
   showAll(tree:TreeModel){
     tree.visible=true;
     if (tree.hasOwnProperty("children")) {
-      tree.children.forEach(c=>this.showAll(c));
+      tree.children?.forEach(c=>this.showAll(c));
     }
   }
 }

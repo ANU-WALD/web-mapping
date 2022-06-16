@@ -36,8 +36,8 @@ export class AvailableDatesService {
 
       let prev$ = this.metadata.getTimeDimension(layer.host,fn);
 
-      res$ = forkJoin(...[prev$,res$]).pipe(
-        map((years:Date[][])=> years[0].concat(years[1])));
+      res$ = forkJoin([prev$,res$]).pipe(
+        map((years:UTCDate[][])=> years[0].concat(years[1])));
     }
 
     return res$.pipe(

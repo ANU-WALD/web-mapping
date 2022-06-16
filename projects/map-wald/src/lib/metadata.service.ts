@@ -103,7 +103,7 @@ export class MetadataService {
   getGridForURL(url:string):Observable<number[][]>{
     const ddx$ = this.ddxForUrl(url);
     const das$ = this.dasForUrl(url);
-    const res$ = <Observable<number[][]>>forkJoin([ddx$,das$]).pipe(
+    const res$ = forkJoin([ddx$,das$]).pipe(
       map((metadata:any[])=>{
         const ddx:DapDDX = metadata[0];
         const das:DapDAS = metadata[1];
@@ -118,7 +118,7 @@ export class MetadataService {
           this.dap.getData(`${url}.ascii?${lngCoord}`,das).pipe(
             map((dd:DapData)=><number[]>dd[lngCoord]));
 
-        return forkJoin<number[]>(lat$,lng$);
+        return forkJoin([lat$,lng$]);
       }),switchAll(),publishReplay(),refCount());
       return res$;
   }
