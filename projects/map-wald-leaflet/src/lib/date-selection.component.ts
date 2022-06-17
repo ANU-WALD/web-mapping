@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, Output, EventEmitter } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { TimeUtilsService, InterpolationService } from 'map-wald';
+import { TimeUtilsService, InterpolationService, UTCDate } from 'map-wald';
 
 const MILLISECONDS_PER_DAY=24*60*60*1000;
 
@@ -69,11 +69,11 @@ declare var Plotly: any;
   `
 ]})
 export class DateSelectionComponent implements AfterViewInit  {
-  @Input() date: Date;
+  @Input() date: UTCDate;
   @Output() dateChange = new EventEmitter();
   @Input() timestep: string;
-  @Input() minDate: Date|string;
-  @Input() maxDate: Date|string;
+  @Input() minDate: UTCDate|string;
+  @Input() maxDate: UTCDate|string;
   @Input() style: ('popup'|'arrows') = 'arrows';
   @Input() stepDays = 1;
   @Input() referenceDate:string = null;
@@ -143,7 +143,7 @@ export class DateSelectionComponent implements AfterViewInit  {
 
   move(n:number){
     this.date = new Date(this.date&&this.date.getTime());
-    this.date.setDate(this.date.getDate()+n);
+    this.date.setUTCDate(this.date.getUTCDate()+n);
     this.onDateChanged();
     this.dateChange.emit(this.date);
   }
@@ -164,9 +164,9 @@ export class DateSelectionComponent implements AfterViewInit  {
     }
 
     let refComponents = InterpolationService.interpolate(this.referenceDate,{
-      year:this.date.getFullYear(),
-      month:this.date.getMonth()+1,
-      date:this.date.getDate()
+      year:this.date.getUTCFullYear(),
+      month:this.date.getUTCMonth()+1,
+      date:this.date.getUTCDate()
     }).split('-').map(s=>+s);
 
     let currentRef = new Date(Date.UTC(refComponents[0],refComponents[1]-1,refComponents[2]));
