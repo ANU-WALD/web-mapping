@@ -1,0 +1,102 @@
+<div class="button-bar bb-vertical">
+  <div>
+    <button class="btn btn-secondary btn-sm" (click)="toggleButtons()" [ngbTooltip]="showWindows?'Hide windows':'Show windows'"
+      [placement]="hintPlacement">
+      <i class="fa" [ngClass]="showWindows?'fa-eye-slash':'fa-eye'"></i>
+    </button>
+  </div>
+  <div *ngIf="showWindows">
+    <button class="btn btn-secondary btn-sm" (click)="zoomIn()" [disabled]="zoom>=maxZoom" ngbTooltip="Zoom in"
+      [placement]="hintPlacement">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+  <div *ngIf="showWindows">
+    <button class="btn btn-secondary btn-sm" (click)="zoomOut()" [disabled]="zoom<=minZoom" ngbTooltip="Zoom out"
+      [placement]="hintPlacement">
+      <i class="fa fa-minus"></i>
+    </button>
+  </div>
+  <div *ngIf="showWindows">
+    <button class="btn btn-secondary btn-sm" (click)="zoomToFit()" ngbTooltip="Zoom to full extent"
+      [placement]="hintPlacement">
+      <i class="fa fa-arrows-alt"></i>
+    </button>
+  </div>
+  <div *ngIf="showWindows&&helpModal">
+    <button class="btn btn-secondary btn-sm"
+            (click)="helpModal.show()"
+            ngbTooltip="Show welcome (help) screen"
+            [placement]="hintPlacement">
+      <i class="fa fa-question"></i>
+    </button>
+  </div>
+  <!--
+  <div *ngIf="showWindows">
+    <button class="btn btn-secondary btn-sm"
+            (click)="toggleTransparency()"
+            [ngbPopover]="transparencyPopover"
+            triggers="mouseenter:mouseleave"
+            [openDelay]="500"
+            [autoClose]="true"
+            [closeDelay]="3000"
+            [placement]="hintPlacement">
+      <i class="fa" [ngClass]="(opacity<0.5)?'fa-circle-o':((opacity<0.9)?'fa-adjust':'fa-circle')"></i>
+    </button>
+  </div>
+  <div *ngIf="showWindows&&basemaps?.length">
+    <button class="btn btn-secondary btn-sm"
+            (click)="toggleBaseLayer()"
+            [ngbPopover]="basemapPopover"
+            triggers="mouseenter:mouseleave"
+            [openDelay]="500"
+            [autoClose]="false"
+            [closeDelay]="5000"
+            [placement]="hintPlacement">
+      <i class="fa" [ngClass]="baseLayer?.icon"></i>
+    </button>
+  </div>
+  <div *ngIf="showWindows && mainLayer?.layer">
+    <a class="btn btn-secondary btn-sm" [href]="mainLayer.downloadURL" target="blank">
+      <i class="fa fa-download"></i>
+    </a>
+  </div> -->
+</div>
+
+<!--
+<ng-template #basemapPopover>
+  <div class="basemap-popover">
+    <button class="btn btn-secondary" *ngFor="let bm of basemaps; let i=index"
+            (click)="setBaseLayer(i)">
+      <i class="fa" [ngClass]="bm.icon"></i>
+      &nbsp;
+      {{bm.name}}
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #transparencyPopover>
+  <div class="transparency-popover">
+    <div class="form-group">
+      <label for="transparencySlider">Transparency</label>
+      <input type="range"
+             class="form-control-range"
+             id="transparencySlider"
+             [(ngModel)]="transparency"
+             (ngModelChange)="transparencyChanged()"
+             min="0"
+             max="100">
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #vectorPopover>
+  <div class="vector-popover">
+    <button class="btn btn-outline-secondary float-right" (click)="vp.close()">X</button>
+    <app-vector-layer-selection [vectorLayers]="vectorLayers"
+                                [currentZoom]="zoom"
+                                (vectorLayerSelected)="vectorLayerChanged($event)">
+
+    </app-vector-layer-selection>
+  </div>
+</ng-template> -->

@@ -1,0 +1,163 @@
+[
+  {
+    "extent":"Global",
+    "name": "National borders",
+    "description": "TODO",
+    "tiles":"/tiles/AdminSHP-global/{z}/{x}/{y}.pbf",
+    "tilesZ":"/tiles/062_ANU/VectorTiles/AdminSHP-global/{z}/{x}/{y}.pbf",
+    "tilesY":"/tiles_nsw_act/{z}/{x}/{y}.pbf",
+    "tileLayers":[
+      {
+        "layer":"AdminSHPglobal",
+        "keyField":"GID_0"
+      }
+    ],
+    "availableZooms":[0,7],
+    "displayZooms":[0,999],
+    "label":"$NAME_0"
+  },
+  {
+    "extent":"Global",
+    "name": "State/Province borders",
+    "description": "TODO",
+    "tiles":"/tiles/AdminSHP-local/{z}/{x}/{y}.pbf",
+    "tileLayers":[
+      {
+        "layer":"AdminSHPlocal",
+        "keyField":"GID_1"
+      }
+    ],
+    "availableZooms":[0,10],
+    "displayZooms":[0,999],
+    "label":"$NAME_1 ($NAME_0)"
+  },
+  {
+    "extent":"Global",
+    "name": "Basins",
+    "description": "TODO",
+    "tiles":"/tiles/HydroSHP-global/{z}/{x}/{y}.pbf",
+    "tileLayers":[
+      {
+        "layer":"HydroSHPglobal",
+        "keyField":"HYBAS_ID"
+      }
+    ],
+    "availableZooms":[0,7],
+    "displayZooms":[0,999],
+    "label":""
+  },
+  {
+    "extent":"Global",
+    "name": "Catchments",
+    "description": "TODO",
+    "tiles":"/tiles/HydroSHP-local/{z}/{x}/{y}.pbf",
+    "tileLayers":[
+      {
+        "layer":"HydroSHPlocal",
+        "keyField":"HYBAS_ID_l"
+      }
+    ],
+    "availableZooms":[0,10],
+    "displayZooms":[0,999],
+    "label":""
+  },
+  {
+    "extent":"Australia",
+    "name": "States and Territories",
+    "description": "TODO",
+    "source": "states",
+    "labelField": "STATE_NAME",
+    "keyField": "STATE_CODE"
+  },
+  {
+    "extent":"Australia",
+    "name": "Statistical Region (ABS)",
+    "description": "Statistical Areas Level 3 (SA3s) provide a standardised regional breakup of Australia",
+    "source": "SA3_2016_AUST",
+    "summaryName": "SA3_2016_AUST",
+    "labelField": "SA3_NAME16",
+    "keyField": "SA3_CODE16"
+  },
+  {
+    "extent":"Australia",
+    "name": "BoM river regions",
+    "description": "TODO",
+    "source": "HR_Regions_river_region",
+    "labelField": "RivRegName",
+    "keyField": "OBJECTID"
+  },
+  {
+    "extent":"Australia",
+    "name": "Bioregions (IBRA)",
+    "description": "TODO",
+    "source": "ibra7_regions",
+    "labelField": "REG_NAME_7",
+    "keyField": "REC_ID"
+  },
+  {
+    "extent":"Australia",
+    "name": "NRM Regions",
+    "description": "TODO",
+    "source": "NRM_Regions_2017",
+    "labelField": "NRM_REGION",
+    "keyField": "NRM_ID"
+  },
+  {
+    "extent":"Australia",
+    "name": "National Parks",
+    "description": "TODO",
+    "source": "NP_GT_5K",
+    "globalLabel": "All National Parks",
+    "labelField": "NAME",
+    "keyField": "wenfo_ID",
+    "summaryName": "NP_GT_5K"
+  },
+  {
+    "extent":"Australia",
+    "name": "Local Government Areas",
+    "description": "TODO",
+    "source": "LGA_2019_AUST",
+    "labelField": "LGA_NAME19",
+    "keyField": "LGA_CODE19"
+  },
+  {
+    "extent":"Australia",
+    "name": "Ramsar Wetlands",
+    "description": "TODO",
+    "source": "ramsar2015",
+    "globalLabel": "All Ramsar Wetlands",
+    "labelField": "WETLAND_NA",
+    "summary": "wetlands",
+    "keyField": "OBJECTID"
+  },
+  {
+    "extent":"Australia",
+    "name": "Drainage Divisions",
+    "description": "TODO",
+    "source": "dd_converted",
+    "globalLabel": "All Drainage Divisions",
+    "labelField": "Division",
+    "summaryName": "geofab_DD",
+    "keyField": "OBJECTID"
+  },
+  {
+    "extent":"Australia",
+    "name": "Federal Electorates",
+    "description": "TODO",
+    "source": "COM_ELB_region",
+    "globalLabel": "All Federal Electorates",
+    "labelField": "Elect_div",
+    "summaryName": "COM_ELB_region",
+    "keyField": "FID"
+  },
+  {
+    "extent":"Australia",
+    "name": "State and Territory Electorates",
+    "description": "TODO",
+    "source": "SED_2019_AUST",
+    "globalLabel": "All Federal Electorates",
+    "labelField": "SED_NAME19",
+    "summaryName": "SED_2019_AUST",
+    "keyField": "SED_CODE19"
+  }
+]

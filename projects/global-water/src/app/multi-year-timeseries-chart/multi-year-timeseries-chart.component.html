@@ -1,0 +1,25 @@
+<div *ngIf="effectiveChartSeries?.length">
+  <div class="row">
+    <div class="col-8">
+      <select [(ngModel)]="chartMode"
+              id="chartModeSelect"
+              (ngModelChange)="configureChartMode()"
+              class="form-control form-control-sm">
+        <option *ngFor="let cm of chartModes" [ngValue]="cm">{{cm}}</option>
+      </select>
+    </div>
+    <div class="col-4">
+      <button class="float-right btn btn-sm btn-primary btn-download" (click)="downloadClick()">Download</button>
+    </div>
+  </div>
+  <p *ngIf="chartLabel" class="chart-title"><strong>{{chartLabel}}</strong></p>
+  <app-chart [series]="effectiveChartSeries"
+             axisLabel=""
+             x="date"
+             y="value">
+
+  </app-chart>
+  <div class="row">
+  </div>
+</div>
+

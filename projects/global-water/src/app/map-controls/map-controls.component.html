@@ -1,0 +1,49 @@
+<div>
+  <div class="row">
+    <div [ngClass]="(orientation==='vertical')?'col-6':'col-2'">
+      <select class="form-control form-control-sm" [(ngModel)]="settings.layer" (ngModelChange)="layerChanged()">
+        <option *ngFor="let lyr of layers" [ngValue]="lyr">{{lyr.label}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <date-selection [date]="settings.date"
+                      [minDate]="settings.layer?.timePeriod?.start"
+                      [maxDate]="settings.layer?.timePeriod?.end"
+                      [style]="'popup'"
+                      [disabled]="!settings.layer?.timePeriod"
+                      (dateChange)="dateChanged($event)"
+                      [step]="true"
+                      [stepDays]="settings.dateStep"></date-selection>
+    </div>
+    <div class="col-6">
+      <span>TODO: Animation controls?</span>
+    </div>
+  </div>
+
+  <!-- <div class="row" *ngIf="settings.layer?.relativeOptions">
+    <div class="col-6">
+      <div class="custom-control custom-switch custom-switch-md">
+        <input type="checkbox"
+               class="custom-control-input"
+               id="relativeSwitch"
+               [(ngModel)]="settings.relative"
+               (ngModelChange)="relativeSwitchChanged()">
+        <label class="custom-control-label" for="relativeSwitch">relative to</label>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <select class="form-control form-control-sm"
+              [(ngModel)]="settings.relativeVariable"
+              (ngModelChange)="relativeModeChanged()">
+        <option *ngFor="let item of settings.layer.relativeOptions | keyvalue">
+          {{item.key}}
+        </option>
+      </select>
+    </div>
+  </div> -->
+
+</div>

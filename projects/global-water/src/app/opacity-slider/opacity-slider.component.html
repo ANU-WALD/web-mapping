@@ -1,0 +1,15 @@
+<div class="row form-group">
+    <div class="col-12">
+        <label for="opacitySlider">opacity</label>
+    </div>
+    <div class="col-12">
+        <input type="range"
+                class="custom-range"
+                id="opacitySlider"
+                [(ngModel)]="opacity"
+                (ngModelChange)="formControlChanged()"
+                min="0"
+                max="100">
+    </div>
+</div>
+

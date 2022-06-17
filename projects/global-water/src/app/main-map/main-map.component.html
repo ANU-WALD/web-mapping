@@ -1,0 +1,232 @@
+<!--
+  <div id="main-map" class="main-map">
+ -->
+
+<div>
+  <leaflet-map class="main-map"
+               [baseMap]="basemap"
+               [bounds]="bounds"
+               [maxBounds]="maxBounds"
+               [minZoom]="1"
+               [maxZoom]="16"
+               [zoomControl]="false"
+               [pointSelection]="mapConfig.latLngSelection"
+               (pointSelected)="pointSelected($event)">
+
+    <wms-layer [url]="wmsURL" [params]="wmsParams" [zIndex]="-30"></wms-layer>
+
+    <draw *ngIf="mapConfig.enableDrawing"
+          (featureClosed)="polygonFeatureSelected($event)">
+    </draw>
+
+    <geojson-layer *ngIf="pointLayerFeatures"
+                   [features]="pointLayerFeatures"
+                   [pointMode]="pointMode.circle"
+                   [style]="{weight:1,radius:siteStyles.size,fillOpacity:1,fillColor:siteStyles.fill,color:'#00000022'}"
+                   (featureSelected)="pointFeatureSelected($event)"
+                   [zIndex]="400">
+
+    </geojson-layer>
+
+    <geojson-layer *ngIf="mapConfig.latLngSelection&&polygonFeaturesForSelectedPoint"
+      [features]="polygonFeaturesForSelectedPoint"
+      [style]="{weight:1,fillOpacity:1,color:'#00000099'}">
+    </geojson-layer>
+
+    <geojson-layer *ngIf="mapConfig.showVectors&&mapConfig.allowPolygonSelection&&vectorLayer?.source"
+                   [url]="vectorLayer.source"
+                   (featureSelected)="polygonFeatureSelected($event)">
+    </geojson-layer>
+
+    <geojson-layer *ngIf="mapConfig.showVectors&&!mapConfig.allowPolygonSelection&&vectorLayer?.source"
+                   [url]="vectorLayer.source">
+    </geojson-layer>
+
+    <vector-tile-layer *ngIf="mapConfig.showVectors&&mapConfig.allowPolygonSelection&&vectorLayer?.tileLayers"
+                       [url]="vectorLayer.tiles"
+                       [styles]="vectorStyles"
+                       [sublayers]="vectorLayer.tileLayers"
+                       [minNativeZoom]="vectorLayer.availableZooms[0]"
+                       [maxNativeZoom]="vectorLayer.availableZooms[1]"
+                       (featureSelected)="polygonFeatureSelected($event)"></vector-tile-layer>
+
+    <vector-tile-layer *ngIf="mapConfig.showVectors&&!mapConfig.allowPolygonSelection&&vectorLayer?.tileLayers"
+                       [url]="vectorLayer.tiles"
+                       [styles]="vectorStyles"
+                       [sublayers]="vectorLayer.tileLayers"
+                       [minNativeZoom]="vectorLayer.availableZooms[0]"
+                       [maxNativeZoom]="vectorLayer.availableZooms[1]"></vector-tile-layer>
+
+    <map-control [position]="'TOP_LEFT'">
+      <app-map-buttons [basemaps]="basemaps"
+                       [minZoom]="0"
+                       [maxZoom]="16"
+                       [vectorLayers]="vectorLayers"
+                       (optionsChanged)="displayOptionsChanged($event)"
+                       [helpModal]="splash"
+                       [hintPlacement]="'right'">
+      </app-map-buttons>
+    </map-control>
+
+    <map-control [position]="'TOP_CENTER'">
+      <div *ngIf="showWindows" class="map-controls">
+        <div class="logo-block">
+          <div class="title-block">
+            <h1>Global Water Monitor</h1>
+          </div>
+          <div class="row">
+            <div class="theme-bar float-left">
+              <div class="btn-group" role="group">
+                <button *ngFor="let lyr of layers" type="button" class="btn btn-primary"
+                        [ngClass]="{'active':lyr===layer}"
+                        [ngbTooltip]="lyr.label"
+                        (click)="setLayer(lyr)">
+                  <span *ngIf="!lyr.icon">{{lyr.label}}</span>
+                  <i *ngIf="lyr.icon" class="fa" [ngClass]="lyr.icon"></i>
+                </button>
+              </div>
+              <div class='float-right'>
+                  <select class="form-control variant-selection" 
+                        [(ngModel)]="selectedVariant"
+                        [disabled]="!layerVariants?.length"
+                        (ngModelChange)="variantChanged()"
+                        [ngbTooltip]="'Variant'">
+                  <option *ngFor="let variant of layerVariants" [ngValue]="variant">{{variant.variantLabel}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <app-time-slider [dates]="layerDates"
+                           [(date)]="date"
+                           [format]="dateFormat"
+                           (dateChange)="dateChange()"></app-time-slider>
+        </div>
+      </div>
+
+    </map-control>
+
+    <map-control [position]="'BOTTOM_RIGHT'">
+      <div *ngIf="showWindows" class="chart-control">
+        <div class="row">
+          <div class="col-12">
+            <div class="btn-group btn-group-toggle"
+                 *ngIf="layer"
+                 ngbRadioGroup
+                 name="polygonSelection"
+                 [(ngModel)]="polygonMode"
+                 (ngModelChange)="featureSelectionModeChanged()">
+              <label ngbButtonLabel [ngClass]="(polygonMode==='point')?'btn-primary':'btn-secondary'">
+                <input ngbButton type="radio" value="point">Select point
+              </label>
+              <label ngbButtonLabel [ngClass]="(polygonMode==='predefined')?'btn-primary':'btn-secondary'">
+                <input ngbButton type="radio" value="predefined" [disabled]="!layer.polygonDrill">Select area
+              </label>
+              <label ngbButtonLabel [ngClass]="(polygonMode==='draw')?'btn-primary':'btn-secondary'">
+                <input ngbButton type="radio" value="draw" [disabled]="!layer.polygonDrill">Draw polygon
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <app-multi-year-timeseries-chart [chartSeries]="rawChartData"
+                                           [focusYear]="focusYear"
+                                           [chartLabel]="chartPolygonLabel">
+
+          </app-multi-year-timeseries-chart>
+        </div>
+        <div *ngIf="!rawChartData">
+          <div class="alert alert-info">
+            <i class="fa fa-info-circle"></i>
+            {{chartPrompt[polygonMode]}}
+          </div>
+        </div>
+        <div *ngIf="showWindows" class="logo-block">
+          <app-logo-block></app-logo-block>
+        </div>
+      </div>
+    </map-control>
+
+
+    <map-control [position]="'BOTTOM_LEFT'" >
+      <div *ngIf="showWindows&&layer" class="map-controls legend">
+        <legend [labels]="legend.labels"
+                [colours]="legend.colours"
+                [markerClasses]="legend.shape"
+                [title]="layer.label"
+                [mapUnits]="layer.units"
+                [helpText]="layer.help"
+                [tooltipPlacement]="'top'">
+        </legend>
+        <span>
+            Data by <a [href]="layer.attributionURL" target="_blank">{{layer.attribution}}</a>
+        </span>
+        <!-- <app-logo-block></app-logo-block> -->
+
+      </div>
+    </map-control>
+<!-- 
+    <map-control [position]="'BOTTOM_LEFT'">
+      <div *ngIf="showWindows">
+        <map-coordinates></map-coordinates>
+      </div>
+    </map-control>
+ -->
+
+    <map-control [position]="'TOP_RIGHT'">
+      <div *ngIf="showWindows" class="map-control display-settings">
+        <div class="row">
+          <div class="col-4">
+            <app-display-settings [opacity]="opacity"
+                                  (displaySettingsChange)="mapSettingChanged($event)"></app-display-settings>
+          </div>
+          <div class="col-4">
+            <div class="row form-group">
+              <div class="col-12">
+                <label for="basemapSelect">background</label>
+              </div>
+              <div class="col-12">
+                <select [(ngModel)]="basemap"
+                        id="basemapSelect"
+                        (ngModelChange)="basemapChanged()"
+                        class="form-control form-control-sm">
+                  <option *ngFor="let bl of basemaps" [ngValue]="bl">{{bl.name}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="row">
+              <div class="col-12">
+                <label for="vector-selection">boundaries</label>
+              </div>
+              <div class="col-12">
+                <vector-layer-selection [vectorLayers]="vectorLayers"
+                                        [currentZoom]="zoom"
+                                        [vectorLayer]="vectorLayer"
+                                        [enabled]="mapConfig.showVectors"
+                                        (vectorLayerSelected)="vectorLayerChanged($event)">
+                </vector-layer-selection>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </map-control>
+
+    <!-- <map-control [position]="'BOTTOM_CENTER'">
+      <div *ngIf="showWindows" class="logo-block-standalone map-controls">
+        <app-logo-block></app-logo-block>
+      </div>
+    </map-control> -->
+  </leaflet-map>
+</div>
+
+<one-time-splash #splash application="tree-change" klass="about" label="">
+  <app-about></app-about>
+</one-time-splash>
+

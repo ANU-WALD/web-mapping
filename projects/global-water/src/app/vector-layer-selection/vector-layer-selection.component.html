@@ -1,0 +1,31 @@
+<div class="vector-layer-selection" *ngIf="vectorLayers">
+  <!-- text - help -->
+<!--
+  <div class="form-group">
+    <input class="form-control form-control-sm" type="radio">
+    <label>Select from predefined polygons</label>
+  </div>
+ -->
+  <select class="form-control form-control-sm"
+          [(ngModel)]="selectedLayer"
+          (ngModelChange)="layerChanged($event)"
+          [disabled]="!enabled">
+    <option *ngFor="let vl of vectorLayers" [ngValue]="vl">{{vl.name}}</option>
+  </select>
+
+  <ngb-alert *ngIf="enabled&&selectedLayer?.displayZooms&&(currentZoom<selectedLayer.displayZooms[0])"
+             type="info"
+             [dismissible]="false">
+    Zoom in closer to see polygons.
+  </ngb-alert>
+<!--
+  <div class="form-group">
+    <input class="form-control form-control-sm" type="radio">
+    <label>Draw your own polygon</label>
+  </div>
+ -->
+
+ <!-- instructions -->
+  <!-- clear button -->
+  <!-- <button class="btn btn-secondary">Clear points</button> -->
+</div>

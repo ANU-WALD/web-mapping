@@ -1,0 +1,42 @@
+<div class="row time-slider-row">
+  <span style="width:100%;">
+    <span class="float-left">Select date</span>
+    <span class="float-right">
+      <a [ngbPopover]="popContent"
+         [popoverTitle]="popTitle"
+         [autoClose]="'outside'"
+         placement="bottom"
+         ngbTooltip="Select date from calendar"
+         class="some-a">{{currentDate}}</a>
+    </span>
+  </span>
+
+<input type="range"
+       class="time-slider"
+       [(ngModel)]="currentStep"
+       (ngModelChange)="stepChanged(true)"
+       [min]="min"
+       [max]="max"
+       (mousemove)="mousemove($event)"
+       (mouseleave)="mouseleave()">
+<div *ngIf="tooltipDate"
+     class="slider-tooltip"
+     [ngStyle]="{left:tooltipPos}"
+     (click)="selectTooltipDate()"
+     (mouseleave)="mouseleave()"
+     (mousemove)="mouseHere=true">
+  <p><a class="some-a">{{tooltipDate}}</a></p>
+</div>
+</div>
+
+<ng-template #popContent>
+  <ngb-datepicker [minDate]="firstDate"
+                  [maxDate]="lastDate"
+                  [markDisabled]="markDisabled"
+                  [(ngModel)]="ngbDate"
+                  (ngModelChange)="ngbDateChanged($event)"
+                  >
+  </ngb-datepicker>
+
+</ng-template>
+<ng-template #popTitle>Select date</ng-template>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MapSettings, LayerDescriptor } from './data';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'global-water';
+  title = 'frontend';
+
+  constructor() {
+  }
 }

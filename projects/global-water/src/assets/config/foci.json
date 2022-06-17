@@ -1,0 +1,65 @@
+[
+  {
+    "extent":"Global",
+    "name": "National borders",
+    "description": "TODO",
+    "filename":"AdminSHP-global",
+    "tileLayers":[
+      {
+        "layer":"AdminSHPglobal",
+        "keyField":"GID_0"
+      }
+    ],
+    "availableZooms":[0,7],
+    "displayZooms":[0,999],
+    "label":"{{NAME_0}}"
+  },
+  {
+    "extent":"Global",
+    "name": "State/Province borders",
+    "description": "TODO",
+    "filename":"AdminSHP-local",
+    "tileLayers":[
+      {
+        "layer":"AdminSHPlocal",
+        "keyField":"GID_1"
+      }
+    ],
+    "availableZooms":[0,10],
+    "displayZooms":[0,999],
+    "label":"{{NAME_1}} ({{NAME_0}})"
+  },
+  {
+    "extent":"Global",
+    "name": "Basins",
+    "description": "TODO",
+    "filename":"HydroSHP-global",
+    "tileLayers":[
+      {
+        "layer":"HydroSHPglobal",
+        "keyField":"HYBAS_ID"
+      }
+    ],
+    "availableZooms":[0,7],
+    "displayZooms":[0,999],
+    "label":""
+  },
+  {
+    "extent":"Global",
+    "name": "Catchments",
+    "description": "TODO",
+    "filename":"HydroSHP-local",
+    "tileLayers":[
+      {
+        "layer":"HydroSHPlocal",
+        "keyField":"HYBAS_ID_l"
+      }
+    ],
+    "availableZooms":[0,10],
+    "displayZooms":[0,999],
+    "label":""
+  },
+  {
+    "name": "None"
+  }
+]

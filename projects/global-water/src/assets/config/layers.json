@@ -1,0 +1,301 @@
+[
+  {
+    "type":"constants",
+    "mswx_meta":"https://mswx2-mtmenipwta-ts.a.run.app/config?layer={{variable}}",
+    "mswx_url":"https://mswx2-mtmenipwta-ts.a.run.app/wms",
+    "mswx_params":{
+      "time":"{{year}}-{{month}}-01T00:00:00.000Z"
+    },
+    "mswx_time":    {
+      "start":1979,
+      "end":-30,
+      "interval":{
+        "months":1
+      }
+    },
+    "mswx_drill":"https://australia-southeast1-wald-1526877012527.cloudfunctions.net/mswx-tx",
+    "decile_breaks":[
+      0,1,2,3,4,5,6,7,8,9,10
+    ],
+    "decile_labels":[
+      ">100%",
+      "90% - 100%",
+      "80% - 90%",
+      "70% - 80%",
+      "60% - 70%",
+      "50% - 60%",
+      "40% - 50%",
+      "30% - 40%",
+      "20% - 30%",
+      "10% - 20%",
+      "0% - 10%"
+    ],
+    "decile_palette":{
+      "name": "RdYlBu",
+      "count": 11,
+      "reverse": false
+    },
+    "preciptation_labels":[
+      "> 1000 mm/mo",
+      "750 - 1000 mm/mo",
+      "500 - 750 mm/mo",
+      "300 - 500 mm/mo",
+      "200 - 300 mm/mo",
+      "100 - 200 mm/mo",
+      "50 - 100 mm/mo",
+      "25 - 50 mm/mo",
+      "5 - 25 mm/mo",
+      "< 5mm/mo"
+    ],
+    "temp_labels":[
+      ">35",
+      "30 - 35",
+      "25 - 30",
+      "20 - 25",
+      "15 - 20",
+      "10 - 15",
+      "5 - 10",
+      "0 - 5",
+      "-10 - 0",
+      "-20 - -10",
+      "<-20"
+    ]
+  },
+  {
+    "type":"grid",
+    "source":"custom",
+    "label":"Climate",
+    "icon":"",
+    "metadata":"$mswx_meta$",
+    "url":"$mswx_url$",
+    "timePeriod":"$mswx_time$",
+    "polygonDrill":"$mswx_drill$",
+    "mapParams":"$mswx_params$",
+    "variants":[
+      {
+        "variantLabel":"Precipitation",
+        "units": "mm/mo",
+        "variable":"MSWX_precipitation_GWM",
+        "legendLabels":"$preciptation_labels$"
+      },
+      {
+        "variantLabel":"Average temperature",
+        "units": "&deg;C",
+        "variable":"MSWX_air_temperature_GWM",
+        "legendLabels":"$temp_labels$"
+      },
+      {
+        "variantLabel":"Minimum temperature",
+        "units": "&deg;C",
+        "variable":"MSWX_tmin_air_temperature_GWM",
+        "legendLabels":"$temp_labels$"
+      },
+      {
+        "variantLabel":"Maximum temperature",
+        "units": "&deg;C",
+        "variable":"MSWX_tmax_air_temperature_GWM",
+        "legendLabels":"$temp_labels$"
+      },
+      {
+        "variantLabel":"Humidity",
+        "units": "%",
+        "variable":"MSWX_relative_humidity"
+      }
+    ]
+  },
+  {
+    "type":"grid",
+    "source":"custom",
+    "label":"Soil water",
+    "icon":"",
+    "metadata":"https://c3s-sm-mtmenipwta-ts.a.run.app/config?layer={{variable}}",
+    "url":"https://c3s-sm-mtmenipwta-ts.a.run.app/wms",
+    "variable":"C3S-SoilMoisture",
+    "X":"https://c3s-sm-mtmenipwta-ts.a.run.app/wms?service=WMS&request=GetMap&layers=C3S-SoilMoisture&styles=&format=image%2Fpng&transparent=true&version=1.1.1&height=256&width=256&srs=EPSG%3A3857&time=2020-12-01T00%3A00%3A00.000Z&bbox=7514065.628545968,2504688.542848655,10018754.171394622,5009377.085697314",
+    "polygonDrill":"https://australia-southeast1-wald-1526877012527.cloudfunctions.net/c3s-sm-tx",
+    "mapParams":"$mswx_params$",
+    "timePeriod":{
+      "start":2000,
+      "end":2020,
+      "interval":{
+        "months":1
+      }
+    },
+    "legendLabels":[
+      "0.35-0.40",
+      "0.30-0.35",
+      "0.25-0.30",
+      "0.20-0.25",
+      "0.15-0.20",
+      "0.10-0.15",
+      "0.05-0.10",
+      "0.00-0.05"
+    ],
+    "units":"?"
+  },
+  {
+    "type":"point",
+    "label":"Waterbodies",
+    "icon":"",
+    "filename":"ub8/global/GRALM/Global_Lake_NRT_Storage (1984-present).nc",
+    "filenameX":"ub8/global/GRALM/Global_Reservoir_Storage_B (1984-current).nc",
+    "relatedFiles":[
+      {
+        "filename": "ub8/global/GRALM/NRT_Storage_Decile.nc",
+        "meta":[
+          "decile"
+        ]
+      }
+    ],
+    "meta":[
+      "name",
+      "admin_country",
+      "admin_province",
+      "type"
+    ],
+    "variables":[
+      "storage"
+    ],
+    "chartLabel":"{{name}} ({{admin_country}},{{admin_province}})",
+    "time":"time",
+    "timeFirst":true,
+    "timePeriod":{
+      "format":"%B %d, %Y"
+    },
+    "variants":[
+      {
+        "variantLabel":"Storage",
+        "units": "GL",
+        "palette": {
+          "name": "YlGnBu",
+          "count": 6,
+          "reverse": false
+        },
+        "breaks":[
+          0,
+          5,
+          50,
+          500,
+          5000,
+          50000
+        ]
+      },
+      {
+        "variantLabel":"Decile",
+        "bin":"decile",
+        "breaks":"$decile_breaks$",
+        "legendLabels":"$decile_labels$",
+        "palette":"$decile_palette$"
+      },
+      {
+        "variantLabel":"Median",
+        "relative":{
+          "variable":"decile[5]"
+        },
+        "palette": {
+          "name": "RdBu",
+          "count": 6,
+          "reverse": false
+        }
+      }
+    ]
+  },
+  {
+    "type":"point",
+    "label":"Rivers",
+    "icon":"",
+    "filename":"ub8/global/GRALM/Global_River_Discharge_GSGR (2000-present).nc",
+    "relatedFiles":[
+      {
+        "filename": "ub8/global/GRALM/Discharge_Decile_GSGR.nc",
+        "meta":[
+          "decile"
+        ]
+      }
+    ],
+    "meta":[
+      "Riv_Qmean",
+      "Riv_Qmax",
+      "name",
+      "admin_country",
+      "admin_province"
+    ],
+    "variables":[
+      "river_discharge"
+    ],
+    "chartLabel":"Gauge on {{name}} ({{admin_country}},{{admin_province}})",
+    "time":"time",
+    "timeFirst":false,
+    "timePeriod":{
+      "format":"%B %d, %Y"
+    },
+    "palette": {
+      "name": "YlGnBu",
+      "count": 6,
+      "reverse": false
+    },
+    "paletteX":{
+      "name": "PuBu",
+      "count": 6,
+      "reverse": false
+    },
+    "variants":[
+      {
+        "variantLabel":"Current",
+        "units": "m&sup3;/s",
+        "breaks":[
+          0,
+          100,
+          500,
+          1000,
+          5000,
+          10000
+        ]
+      },
+      {
+        "variantLabel":"Decile",
+        "bin":"decile",
+        "breaks":"$decile_breaks$",
+        "legendLabels":"$decile_labels$",
+        "palette":{
+          "name": "RdYlBu",
+          "count": 11,
+          "reverse": false
+        }
+      },
+      {
+        "variantLabel":"Median",
+        "relative":{
+          "variable":"decile[5]"
+        },
+        "palette": {
+          "name": "RdBu",
+          "count": 6,
+          "reverse": false
+        }
+      },
+      {
+        "variantLabel":"Mean",
+        "relative":{
+          "variable":"Riv_Qmean"
+        },
+        "palette":{
+          "name": "PuBu",
+          "count": 6,
+          "reverse": false
+        }
+      },
+      {
+        "variantLabel":"Maximum",
+        "relative":{
+          "variable":"Riv_Qmax"
+        },
+        "palette":{
+          "name": "PuBu",
+          "count": 6,
+          "reverse": false
+        }
+      }
+    ]
+  }
+]

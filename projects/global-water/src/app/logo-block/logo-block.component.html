@@ -1,0 +1,10 @@
+<div class="logo-block">
+  <span *ngFor="let logo of logos" [ngbTooltip]="logo.label" class="logo-block-logo">
+    <a [href]="logo.url" target="_blank">
+      <img  class="logo"
+            alt="{{logo.label}}"
+            src="assets/{{logo.image}}"
+            height="50">
+    </a>
+  </span>
+</div>
