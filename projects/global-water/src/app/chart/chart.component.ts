@@ -79,7 +79,7 @@ export class ChartComponent implements OnInit, OnChanges {
     }).reverse();
 
     const axisTitle = this.axisLabel || this.series[0].units || '';
-    Plotly.plot(node, series, {
+    Plotly.newPlot(node, series, {
       margin: {
         t: 40,
         l: axisTitle ? 50 : 30,
