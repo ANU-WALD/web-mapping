@@ -66,12 +66,12 @@ export class VectorTileLayerComponent implements OnInit, OnChanges, OnDestroy {
         maxZoom:this.maxZoom,
         minNativeZoom:this.minNativeZoom,
         maxNativeZoom:this.maxNativeZoom,
-        interactive: true,
+        interactive: !!this.featureSelected.observers.length,
         vectorTileLayerStyles: this.styles,
         getFeatureId: (f:any) => this.getFeatureId(f)
       });
 
-      // if(this.featureSelected.observers.length){
+      if(this.featureSelected.observers.length){
         this.vectorLayer.on('click' as any,(event)=>{
           if(!this.featureSelected.observers.length){
             return;
@@ -88,7 +88,7 @@ export class VectorTileLayerComponent implements OnInit, OnChanges, OnDestroy {
           const geoJSON = this.vectorGridFeatureToGeoJSON(event.layer);
           this.featureSelected.emit(geoJSON);
         });
-      // }
+      }
       this.vectorLayer.addTo(m);
     });
   }
