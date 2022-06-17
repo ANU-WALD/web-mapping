@@ -448,7 +448,7 @@ export class MainMapComponent implements OnInit {
   polygonFeatureSelected(geoJSON: any): void {
     this.selectedFeatureNumber++;
     const currentSelection = this.selectedFeatureNumber;
-    const drawn = !this.mapConfig.showVectors;
+    const drawn = this.mapConfig.enableDrawing;
     const polygonSource = drawn?CUSTOM_POLYGON:this.vectorLayer.name;
     geoJSON.properties.source = polygonSource;
     this.gaEvent('action','select-polygon',`${polygonSource}`);
