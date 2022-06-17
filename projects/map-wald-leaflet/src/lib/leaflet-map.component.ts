@@ -162,6 +162,7 @@ export class LeafletMapComponent implements OnInit, OnChanges {
         scrollWheelZoom: true,
         layers:baseLayerArray,
         continuousWorld: false,
+        worldCopyJump: true,
         noWrap: true,
         tap: false,
         // worldCopyJump:true
